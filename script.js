@@ -39,3 +39,19 @@ function operate(operator, num1, num2) {
 }
 
 
+
+const buttons = document.querySelectorAll('button');
+buttons.forEach(button => {
+  button.addEventListener('click',showOnDisplay)
+});
+
+const display = document.querySelector('#display');
+
+function showOnDisplay(event){
+  display.textContent = event.target.textContent;
+  if (event.target.textContent === 'C'){
+    return display.textContent = '';
+  }
+};
+
+let currentDisplay = display.textContent;
