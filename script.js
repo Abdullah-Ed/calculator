@@ -77,3 +77,10 @@ equalBtn.addEventListener('click', () => {
 
 
 
+const clearBtn = document.querySelector('#clear');
+clearBtn.addEventListener('click', () => {
+  num1 = '';
+  operator = '';
+  num2 = '';
+  display.textContent = '0';
+});
