@@ -1,57 +1,70 @@
 function add(a,b) {
-  return a +b
-};
+  return a + b;
+}
 
 
 function subtract(a,b) {
-  return a - b
-};
+  return a - b;
+}
 
 
 function multiply(a,b) {
-  return a * b
+  return a * b;
 }
 
 
 function divide(a,b) {
-  return a / b
-} 
+  return a / b;
+}
 
 
-const num1 = 3;
-const operator = '+';
-const num2 = 5;
+let num1 = '';
+let operator = '';
+let num2 = '';
 
 
 function operate(operator, num1, num2) {
   switch (operator) {
     case '+':
-      return add(num1, num2);
+      return add(Number(num1), Number(num2));
     case '-':
-      return subtract(num1, num2);
+      return subtract(Number(num1), Number(num2));
     case '*':
-      return multiply(num1, num2);
+      return multiply(Number(num1), Number(num2));
     case '/':
-      return divide(num1, num2);
+      return divide(Number(num1), Number(num2));
     default:
-      return 'Invalid operator';
+      throw new Error('Invalid operator');
   }
 }
 
-
-
-const buttons = document.querySelectorAll('button');
-buttons.forEach(button => {
-  button.addEventListener('click',showOnDisplay)
+const digitBtn = document.querySelectorAll('.digit');
+digitBtn.forEach(digit => {
+  digit.addEventListener('click', () => {
+    if (num2 === '' && operator ==='') {
+      num1 += digit.textContent;
+      display.textContent = num1;
+    } else {
+      num2 += digit.textContent;
+      display.textContent = num2;
+    }
+  });
 });
+
+
+
+const operatorsBtn = document.querySelectorAll('.operator');
+operatorsBtn.forEach(operatorBtn => {
+  operatorBtn.addEventListener('click', () => operator = operatorBtn.textContent );
+});
+
+
 
 const display = document.querySelector('#display');
 
-function showOnDisplay(event){
-  display.textContent = event.target.textContent;
-  if (event.target.textContent === 'C'){
-    return display.textContent = '';
-  }
+function showOnDisplay(clickedBtnText) {
+  display.textContent = clickedBtnText;
 };
 
-let currentDisplay = display.textContent;
+
+
