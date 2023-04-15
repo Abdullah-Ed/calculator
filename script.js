@@ -68,3 +68,12 @@ function showOnDisplay(clickedBtnText) {
 
 
 
+const equalBtn = document.querySelector('#equals');
+equalBtn.addEventListener('click', () => {
+  display.textContent = operate(operator, num1, num2);
+  operator = '';
+    num2 = '';
+});
+
+
+
