@@ -32,8 +32,12 @@ function operate(operator, num1, num2) {
       result =  multiply(Number(num1), Number(num2));
       return Math.round(result * 100) / 100;
     case '/':
-      result = divide(Number(num1), Number(num2));
-      return Math.round(result * 100) / 100;
+      if (num2 ==='0'){
+        display.textContent = 'monkey'
+      }else{
+        result = divide(Number(num1), Number(num2));
+        return Math.round(result * 100) / 100;
+      }
     default:
       throw new Error('Invalid operator');
   }
