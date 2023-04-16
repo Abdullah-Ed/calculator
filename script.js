@@ -33,7 +33,7 @@ function operate(operator, num1, num2) {
       return Math.round(result * 100) / 100;
     case '/':
       if (num2 ==='0'){
-        display.textContent = 'monkey'
+        display.textContent = 'Error'
       }else{
         result = divide(Number(num1), Number(num2));
         return Math.round(result * 100) / 100;
@@ -99,3 +99,21 @@ clearBtn.addEventListener('click', () => {
   display.textContent = '0';
 });
 
+const decimalBtn = document.querySelector('#decimal');
+decimalBtn.addEventListener('click', ()=>{
+  if (num2 === '') {
+    if (num1.includes('.')){
+      return
+    }else{
+      num1 += decimalBtn.textContent;
+      display.textContent = num1;
+    }
+  } else {
+    if (num2.includes('.')){
+      return
+    }else{
+      num2 += decimalBtn.textContent;
+      display.textContent = num2;
+    }
+  }
+})
