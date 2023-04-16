@@ -21,18 +21,18 @@ function divide(a,b) {
 let num1 = '';
 let operator = '';
 let num2 = '';
-
+let result = 0; 
 
 function operate(operator, num1, num2) {
   switch (operator) {
     case '+':
-      return add(Number(num1), Number(num2));
+      return result = add(Number(num1), Number(num2));
     case '-':
-      return subtract(Number(num1), Number(num2));
+      return result = subtract(Number(num1), Number(num2));
     case '*':
-      return multiply(Number(num1), Number(num2));
+      return result =  multiply(Number(num1), Number(num2));
     case '/':
-      return divide(Number(num1), Number(num2));
+      return result = divide(Number(num1), Number(num2));
     default:
       throw new Error('Invalid operator');
   }
@@ -55,7 +55,17 @@ digitBtn.forEach(digit => {
 
 const operatorsBtn = document.querySelectorAll('.operator');
 operatorsBtn.forEach(operatorBtn => {
-  operatorBtn.addEventListener('click', () => operator = operatorBtn.textContent );
+  operatorBtn.addEventListener('click', () =>{
+    if (!(operator ==='')){
+    display.textContent = operate(operator, num1, num2);
+    operator = operatorBtn.textContent
+    num1 =  result
+    result = 0
+    num2 = '';
+    }else{
+      operator = operatorBtn.textContent
+    }
+  });
 });
 
 
@@ -71,6 +81,8 @@ function showOnDisplay(clickedBtnText) {
 const equalBtn = document.querySelector('#equals');
 equalBtn.addEventListener('click', () => {
   display.textContent = operate(operator, num1, num2);
+  num1 = result
+  result = 0
   operator = '';
     num2 = '';
 });
@@ -82,5 +94,6 @@ clearBtn.addEventListener('click', () => {
   num1 = '';
   operator = '';
   num2 = '';
+  result = 0
   display.textContent = '0';
 });
