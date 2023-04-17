@@ -14,123 +14,131 @@ function divide(a,b) {
   return a / b;
 }
 
-
-let num1 = '';
-let operator = '';
-let num2 = '';
-let result = 0; 
+function round(number) {
+  return Math.round(number * 100) / 100;
+}
 
 function operate(operator, num1, num2) {
   switch (operator) {
     case '+':
-      result = add(Number(num1), Number(num2));
-      return Math.round(result * 100) / 100;
+      return round(add(Number(num1), Number(num2)));
     case '-':
-      result = subtract(Number(num1), Number(num2));
-      return Math.round(result * 100) / 100;
+      return round(subtract(Number(num1), Number(num2)));
     case '*':
-      result =  multiply(Number(num1), Number(num2));
-      return Math.round(result * 100) / 100;
+      return round(multiply(Number(num1), Number(num2)));
     case '/':
       if (num2 ==='0'){
-        display.textContent = 'Error'
-      }else{
-        result = divide(Number(num1), Number(num2));
-        return Math.round(result * 100) / 100;
+        updateDisplay('Error');
+        return;
+      } else {
+        return round(divide(Number(num1), Number(num2)));
       }
     default:
       throw new Error('Invalid operator');
   }
 }
 
-const digitBtn = document.querySelectorAll('.digit');
-digitBtn.forEach(digit => {
-  digit.addEventListener('click', () => {
-    if (num2 === '' && operator ==='') {
-      num1 += digit.textContent;
-      display.textContent = num1;
-    } else {
-      num2 += digit.textContent;
-      display.textContent = num2;
-    }
-  });
-});
-
-const operatorsBtn = document.querySelectorAll('.operator');
-operatorsBtn.forEach(operatorBtn => {
-  operatorBtn.addEventListener('click', () =>{
-    if (!(operator ==='')){
-      display.textContent = operate(operator, num1, num2);
-      operator = operatorBtn.textContent;
-      num1 =  result;
-      result = 0;
-      num2 = '';
-    } else {
-      operator = operatorBtn.textContent;
-    }
-  });
-});
+let num1 = '';
+let operator = '';
+let num2 = '';
+let result = 0; 
 
 
 const display = document.querySelector('#display');
-
-function showOnDisplay(clickedBtnText) {
-  display.textContent = clickedBtnText;
+function updateDisplay(value) {
+  display.textContent = value;
 }
 
-const equalBtn = document.querySelector('#equals');
-equalBtn.addEventListener('click', () => {
-  if (num1 !== '' && num2 !== '' && operator !== '') {
-    display.textContent = operate(operator, num1, num2);
-    num1 = result;
-    result = 0;
-    operator = '';
-    num2 = '';
-  }
-});
-
-
-const clearBtn = document.querySelector('#clear');
-clearBtn.addEventListener('click', () => {
+function clear() {
   num1 = '';
   operator = '';
   num2 = '';
   result = 0;
-  display.textContent = '0';
-});
+  updateDisplay(0);
+}
 
-const decimalBtn = document.querySelector('#decimal');
-decimalBtn.addEventListener('click', () => {
+function deleteLastDigit() {
+  if (num2 === '' && operator === '') {
+    num1 = num1.slice(0, -1);
+    updateDisplay(num1 === '' ? 0 : num1);
+  } else {
+    num2 = num2.slice(0, -1);
+    updateDisplay(num2 === '' ? 0 : num2);
+  }
+}
+
+function addDigit(digit) {
+  if (num2 === '' && operator === '') {
+    num1 += digit;
+    updateDisplay(num1);
+  } else {
+    num2 += digit;
+    updateDisplay(num2);
+  }
+}
+
+function addDecimalPoint() {
   if (num2 === '') {
     if (num1.includes('.')) {
       return;
     } else {
-      num1 += decimalBtn.textContent;
-      display.textContent = num1;
+      num1 += '.';
+      updateDisplay(num1);
     }
   } else {
     if (num2.includes('.')) {
       return;
     } else {
-      num2 += decimalBtn.textContent;
-      display.textContent = num2;
+      num2 += '.';
+      updateDisplay(num2);
     }
   }
+}
+
+function calculateResult() {
+  if (num1 !== '' && num2 !== '' && operator !== '') {
+    result = operate(operator, num1, num2);
+    num1 = result;
+    operator = '';
+    num2 = '';
+    updateDisplay(result);
+  }
+}
+
+
+
+const digitBtns = document.querySelectorAll('.digit');
+digitBtns.forEach(digitBtn => {
+  digitBtn.addEventListener('click', () => addDigit(digitBtn.textContent));
+});
+
+const operatorBtns = document.querySelectorAll('.operator');
+operatorBtns.forEach(operatorBtn => {
+  operatorBtn.addEventListener('click', () => {
+    if (!(operator ==='')){
+      calculateResult();
+    }
+    operator = operatorBtn.textContent;
+  });
+});
+
+const equalBtn = document.querySelector('#equals');
+equalBtn.addEventListener('click', () => {
+  calculateResult();
+});
+
+const clearBtn = document.querySelector('#clear');
+clearBtn.addEventListener('click', () => {
+  clear();
+});
+
+const decimalBtn = document.querySelector('#decimal');
+decimalBtn.addEventListener('click', () => {
+  addDecimalPoint();
 });
 
 const deleteBtn = document.querySelector('#delete');
 deleteBtn.addEventListener('click', () => {
-  if (num2 === '' && operator === '') {
-    num1 = num1.slice(0, -1);
-    display.textContent = num1;
-    if (num1 === '') {
-      display.textContent = 0;
-    }
-  } else {
-    num2 = num2.slice(0, -1);
-    display.textContent = num2;
-    if (num2 === '') {
-      display.textContent = 0;
-    }
-  }
+  deleteLastDigit();
 });
+
