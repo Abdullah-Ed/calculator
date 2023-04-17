@@ -98,10 +98,13 @@ function addDecimalPoint() {
 function calculateResult() {
   if (num1 !== '' && num2 !== '' && operator !== '') {
     result = operate(operator, num1, num2);
-    num1 = result;
+    num1 = result.toString();
     operator = '';
     num2 = '';
     updateDisplay(result);
+    return result;
+  } else {
+    return;
   }
 }
 
@@ -142,3 +145,40 @@ deleteBtn.addEventListener('click', () => {
   deleteLastDigit();
 });
 
+document.addEventListener('keydown', (event) => {
+  const key = event.key;
+  
+  // Check if the key pressed is a digit
+  if (/^[0-9]$/.test(key)) {
+    // Call the digit button click event
+    const digitBtn = document.querySelector(`button[data-key="${key}"]`);
+    if (digitBtn) {
+      digitBtn.click();
+    }
+  }
+  
+  // Check if the key pressed is an operator
+  if (/^[\+\-\*\/]$/.test(key)) {
+    // Call the operator button click event
+    const operatorBtn = document.querySelector(`button[data-key="${key}"]`);
+    if (operatorBtn) {
+      operatorBtn.click();
+    }
+  }
+  
+  if (key === '.') {
+      decimalBtn.click();
+  }
+  
+  if (key === 'Enter') {
+      equalBtn.click();
+  }
+
+  if (key === 'Backspace') {
+      deleteBtn.click();
+  }
+  
+  if (key === 'Escape') {
+      clearBtn.click();
+  }
+});
