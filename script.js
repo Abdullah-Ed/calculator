@@ -100,20 +100,37 @@ clearBtn.addEventListener('click', () => {
 });
 
 const decimalBtn = document.querySelector('#decimal');
-decimalBtn.addEventListener('click', ()=>{
+decimalBtn.addEventListener('click', () => {
   if (num2 === '') {
-    if (num1.includes('.')){
-      return
-    }else{
+    if (num1.includes('.')) {
+      return;
+    } else {
       num1 += decimalBtn.textContent;
       display.textContent = num1;
     }
   } else {
-    if (num2.includes('.')){
-      return
-    }else{
+    if (num2.includes('.')) {
+      return;
+    } else {
       num2 += decimalBtn.textContent;
       display.textContent = num2;
     }
   }
-})
+});
+
+const deleteBtn = document.querySelector('#delete');
+deleteBtn.addEventListener('click', () => {
+  if (num2 === '' && operator === '') {
+    num1 = num1.slice(0, -1);
+    display.textContent = num1;
+    if (num1 === '') {
+      display.textContent = 0;
+    }
+  } else {
+    num2 = num2.slice(0, -1);
+    display.textContent = num2;
+    if (num2 === '') {
+      display.textContent = 0;
+    }
+  }
+});
