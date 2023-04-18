@@ -46,7 +46,14 @@ let result = 0;
 
 const display = document.querySelector('#display');
 function updateDisplay(value) {
-  display.textContent = value;
+  if(value === result){
+    display.style.color = '#509c7b';
+    display.textContent = value;
+  }else{
+    display.style.color = 'inherit';
+    display.textContent = value;
+  }
+  
 }
 
 function clear() {
